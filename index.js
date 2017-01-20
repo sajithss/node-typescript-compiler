@@ -54,7 +54,8 @@ function compile(params, files) {
 			/* Special case for some windows machines, where tsc is not recoginized as a valid executable ***windows */
 			if(process.platform === 'win32')
 			{
-				spawn_executable = `node.exe ${spawn_executable}`;
+				spawn_params = `${spawn_executable} ${spawn_params}`;
+				spawn_executable = `node`;
 			}
 			
 			const spawn_instance = spawn(spawn_executable, spawn_params, spawn_options)
