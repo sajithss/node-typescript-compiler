@@ -142,7 +142,10 @@ function find_tsc() {
 	// second try: should work even if module is symlinked
 	const candidate_from_caller_node_module = path.join(process.cwd(), 'node_modules/typescript/bin/tsc')
 
-	// third try: fallbacking to an eventual global typescript module
+	// third try: check App Roaming folder to find the cmd file for windows systems 
+	const candidate_from_app_roaming = path.join(os_homedir(), 'AppData\\Roaming\\npm\\', 'tsc.cmd')
+	
+	// fourth try: fallbacking to an eventual global typescript module
 	const candidate_from_global = path.join(os_homedir(), '.nvm/versions/node/', process.version, 'bin/tsc')
 
 	function candidate_if_exists(candidate) {
@@ -155,5 +158,6 @@ function find_tsc() {
 
 	return candidate_if_exists(candidate_from_sibling_module)
 	.catch(() => candidate_if_exists(candidate_from_caller_node_module))
+	.catch(() => candidate_if_exists(candidate_from_app_roaming))
 	.catch(() => candidate_if_exists(candidate_from_global))
 }
