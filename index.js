@@ -49,16 +49,8 @@ function compile(params, files) {
 
 		find_tsc()
 		.then(spawn_executable => {
-			console.log(`[${MODULE_ID}] spawning ${tildify(spawn_executable)} ` + spawn_params.join(' ') + '\n')
-			
-			/* Special case for some windows machines, where tsc is not recoginized as a valid executable ***windows */
-			if(process.platform === 'win32')
-			{
-				spawn_params = `${spawn_executable} ${spawn_params}`;
-				spawn_executable = `node`;
-			}
-			
-			const spawn_instance = spawn(spawn_executable, spawn_params, spawn_options)
+			console.log(`[${MODULE_ID}] spawning ${tildify(spawn_executable)} ` + spawn_params.join(' ') + '\n');
+			const spawn_instance = spawn(spawn_executable, spawn_params, spawn_options);
 
 			function fail(reason) {
 				const err = new Error(reason)
